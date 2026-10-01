@@ -1,24 +1,22 @@
 import { useEffect } from 'react';
 
-import { queryClient } from '@/core/query/queryClient';
 import { setUnauthorizedHandler } from '@/core/api/unauthorizedHandler';
 
-import { authService } from '../services/authService';
-import { useAuthStore } from '../store/authStore';
+import { signOut } from '../services/signOut';
 
-
+/**
+ * Registra el cierre de sesión global que dispara el httpClient ante un 401.
+ */
 export function useUnauthorizedHandler(): void {
-  const setUser = useAuthStore((state) => state.setUser);
-
   useEffect(() => {
     setUnauthorizedHandler(() => {
-      void authService.logout();
-      setUser(null);
-      queryClient.clear();
+      // `signOut` limpia el estado local en `finally`; si SecureStore falla
+      // la sesión ya quedó cerrada, así que solo se evita el unhandled rejection.
+      void signOut().catch(() => undefined);
     });
 
     return () => {
       setUnauthorizedHandler(null);
     };
-  }, [setUser]);
+  }, []);
 }

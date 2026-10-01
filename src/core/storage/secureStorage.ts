@@ -6,10 +6,7 @@ export interface SecureStorageAdapter {
   removeItem(key: string): Promise<void>;
 }
 
-/**
- * Único punto de acceso a almacenamiento persistente sensible.
- * Compatible con `createJSONStorage` de zustand/persist.
- */
+
 export const secureStorage: SecureStorageAdapter = {
   getItem: async (key) => SecureStore.getItemAsync(key),
   setItem: async (key, value) => {

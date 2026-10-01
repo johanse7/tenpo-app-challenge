@@ -40,4 +40,14 @@ export const authService = {
   async persistToken(token: string): Promise<void> {
     await secureStorage.setItem(env.TOKEN_STORAGE_KEY, token);
   },
+
+  /**
+   * Un `user` persistido no implica sesión válida: el token vive en otra
+   * clave de SecureStore y puede haberse purgado. Se consulta en frío.
+   */
+  async hasSession(): Promise<boolean> {
+    const token = await secureStorage.getItem(env.TOKEN_STORAGE_KEY);
+
+    return token !== null && token.length > 0;
+  },
 };

@@ -8,13 +8,13 @@ import type { LoginDto } from "../schemas/login.schema";
 import type { AuthSession } from "../types/auth.types";
 
 export function useLogin(): UseMutationResult<AuthSession, Error, LoginDto> {
-  const setUser = useAuthStore((state) => state.setUser);
+  const setSession = useAuthStore((state) => state.setSession);
 
   return useMutation({
     mutationFn: authService.login,
     onSuccess: async (session) => {
       await authService.persistToken(session.token);
-      setUser(session.user);
+      setSession(session.user);
     },
   });
 }

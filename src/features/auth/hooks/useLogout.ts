@@ -1,23 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
 import type { UseMutationResult } from '@tanstack/react-query';
 
-import { queryClient } from '@/core/query/queryClient';
-
-import { authService } from '../services/authService';
-import { useAuthStore } from '../store/authStore';
+import { signOut } from '../services/signOut';
 
 /**
- * Cierre de sesión: purga token (SecureStore), usuario (store)
- * y toda la caché de servidor (PII en memoria).
+ * Cierre de sesión iniciado por el usuario.
+ * La purga completa vive en `signOut`, compartida con el handler de 401.
  */
 export function useLogout(): UseMutationResult<void, Error, void> {
-  const setUser = useAuthStore((state) => state.setUser);
-
   return useMutation({
-    mutationFn: authService.logout,
-    onSuccess: () => {
-      setUser(null);
-      queryClient.clear();
-    },
+    mutationFn: signOut,
   });
 }
