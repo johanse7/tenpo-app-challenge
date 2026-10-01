@@ -16,9 +16,9 @@ export type UsersInfiniteQueryResult = UseInfiniteQueryResult<
 > & { users: User[] };
 
 /**
- * Lista masiva paginada (2000+ registros).
- * El aplanado de páginas se memoiza para no romper
- * la identidad referencial en cada render.
+ * Paginated massive list (2000+ records).
+ * Page flattening is memoized to preserve
+ * referential identity across renders.
  */
 export function useUsers(): UsersInfiniteQueryResult {
   const query = useInfiniteQuery({

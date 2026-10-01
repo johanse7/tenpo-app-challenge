@@ -42,8 +42,8 @@ export const authService = {
   },
 
   /**
-   * Un `user` persistido no implica sesión válida: el token vive en otra
-   * clave de SecureStore y puede haberse purgado. Se consulta en frío.
+   * A persisted `user` does not imply a valid session: the token lives in a
+   * different SecureStore key and may have been purged. Queried on cold start.
    */
   async hasSession(): Promise<boolean> {
     const token = await secureStorage.getItem(env.TOKEN_STORAGE_KEY);

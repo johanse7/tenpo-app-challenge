@@ -9,9 +9,9 @@ import type { AuthUser } from '../types/auth.types';
 interface AuthState {
   user: AuthUser | null;
   /**
-   * `null` = aún no se consultó SecureStore en frío.
-   * `false` = no hay token. `true` = hay token.
-   * No se persiste: siempre se resuelve al arrancar.
+   * `null` = SecureStore has not been queried yet on cold start.
+   * `false` = no token. `true` = token present.
+   * Not persisted: always resolved on startup.
    */
   hasToken: boolean | null;
   setSession: (user: AuthUser) => void;
@@ -20,12 +20,12 @@ interface AuthState {
 }
 
 /**
- * Estado de sesión síncrono. El token NUNCA vive aquí:
- * se persiste por separado en expo-secure-store (authService).
- * La sesión se hidrata de forma asíncrona desde SecureStore.
+ * Synchronous session state. The token NEVER lives here:
+ * it is persisted separately in expo-secure-store (authService).
+ * The session is hydrated asynchronously from SecureStore.
  *
- * `hasToken` es la contraparte del token: sin él `user` no basta para
- * dar la sesión por válida (ver `selectIsAuthenticated`).
+ * `hasToken` is the token counterpart: without it `user` alone is not
+ * enough to consider the session valid (see `selectIsAuthenticated`).
  */
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -49,9 +49,9 @@ export function selectIsAuthenticated(state: AuthState): boolean {
 }
 
 /**
- * `true` solo cuando hay usuario persistido pero todavía no se sabe
- * si su token sigue en SecureStore. Mantiene el splash visible y evita
- * un destello del login antes de resolver la sesión real.
+ * `true` only when there is a persisted user but it is not yet known
+ * whether their token is still in SecureStore. Keeps the splash visible
+ * and prevents a login flash before the real session is resolved.
  */
 export function selectIsProbingToken(state: AuthState): boolean {
   return state.user !== null && state.hasToken === null;

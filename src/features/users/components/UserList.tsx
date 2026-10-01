@@ -19,9 +19,9 @@ interface UserListProps {
 }
 
 /**
- * FlashList: virtualización para datasets de 2000+ registros.
- * Todas las props de función se memoizan (useCallback) para que
- * React.memo de UserItem surta efecto.
+ * FlashList: virtualization for datasets of 2000+ records.
+ * All function props are memoized (useCallback) so that
+ * UserItem's React.memo takes effect.
  */
 export const UserList = memo(function UserList({
   users,

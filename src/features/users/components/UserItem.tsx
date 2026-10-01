@@ -13,8 +13,8 @@ interface UserItemProps {
 }
 
 /**
- * Celda de la lista. React.memo evita re-renders
- * al hacer scroll en datasets de 2000+ elementos.
+ * List cell. React.memo prevents re-renders
+ * when scrolling datasets of 2000+ items.
  */
 export const UserItem = memo(function UserItem({ user }: UserItemProps) {
   return (

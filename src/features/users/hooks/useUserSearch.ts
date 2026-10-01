@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { env } from '@/core/config/env';
+import { useDebounce } from '@/hooks/useDebounce';
 
 import type { User } from '../types/user.types';
 
@@ -12,32 +13,24 @@ export interface UserSearchState {
 }
 
 /**
- * Búsqueda client-side con debounce sobre el dataset ya cacheado.
- * randomuser.me no expone filtro por texto.
+ * Client-side debounced search over the already-cached dataset.
+ * randomuser.me does not expose a text filter.
  */
 export function useUserSearch(users: User[]): UserSearchState {
   const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedSearch(search.trim().toLowerCase());
-    }, env.SEARCH_DEBOUNCE_MS);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [search]);
+  const debouncedSearch = useDebounce(search, env.SEARCH_DEBOUNCE_MS);
 
   const filteredUsers = useMemo(() => {
-    if (debouncedSearch === '') {
+    const query = debouncedSearch.trim().toLowerCase();
+
+    if (query === '') {
       return users;
     }
 
     return users.filter(
       (user) =>
-        user.fullName.toLowerCase().includes(debouncedSearch) ||
-        user.email.toLowerCase().includes(debouncedSearch),
+        user.fullName.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query),
     );
   }, [users, debouncedSearch]);
 
@@ -45,6 +38,6 @@ export function useUserSearch(users: User[]): UserSearchState {
     search,
     setSearch,
     filteredUsers,
-    isDebouncing: search.trim().toLowerCase() !== debouncedSearch,
+    isDebouncing: search !== debouncedSearch,
   };
 }

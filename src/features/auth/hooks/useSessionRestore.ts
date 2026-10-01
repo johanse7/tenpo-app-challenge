@@ -20,12 +20,12 @@ function resolveHasToken(hasToken: boolean): void {
 }
 
 /**
- * Restaura la sesión antes de decidir qué stack de navegación mostrar:
- * 1. zustand/persist hidrata `user` desde SecureStore.
- * 2. Solo si hay `user`, se comprueba que el token siga existiendo.
+ * Restores the session before deciding which navigation stack to show:
+ * 1. zustand/persist hydrates `user` from SecureStore.
+ * 2. Only if there is a `user`, it checks that the token still exists.
  *
- * Sin el paso 2 un usuario con token purgado entraría al área privada
- * y rebotaría recién con el primer 401.
+ * Without step 2, a user with a purged token would enter the private area
+ * and only bounce back on the first 401.
  */
 export function useSessionRestore(): SessionRestoreState {
   const isHydrated = useSyncExternalStore(

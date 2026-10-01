@@ -8,9 +8,9 @@ import type {
 } from '@testing-library/react-native';
 
 /**
- * Client desechable por test: sin `retry` ni `gcTime`, y sin refetch por
- * foco/reconexión, para que los fallos y las transiciones de estado sean
- * deterministas y no queden suscripciones globales activas.
+ * Disposable client per test: no `retry` or `gcTime`, and no refetch on
+ * focus/reconnect, so failures and state transitions are deterministic
+ * and no global subscriptions stay active.
  */
 export function createTestQueryClient(): QueryClient {
   return new QueryClient({
@@ -28,7 +28,7 @@ export function createTestQueryClient(): QueryClient {
 }
 
 export interface ProvidersOptions {
-  /** Permite inyectar un client propio para inspeccionar su caché. */
+  /** Allows injecting a custom client to inspect its cache. */
   queryClient?: QueryClient;
 }
 
@@ -37,8 +37,8 @@ export type RenderHookWithProvidersOptions<TProps> = ProvidersOptions & {
 };
 
 /**
- * Equivalente asíncrono de `renderHook` (RTL v14) envuelto en
- * `QueryClientProvider`. `result.current` expone el valor del hook.
+ * Async equivalent of `renderHook` (RTL v14) wrapped in
+ * `QueryClientProvider`. `result.current` exposes the hook value.
  */
 export async function renderHookWithProviders<TProps, TResult>(
   hook: (props: TProps) => TResult,

@@ -5,7 +5,7 @@ import { setUnauthorizedHandler } from '@/core/api/unauthorizedHandler';
 import { signOut } from '../services/signOut';
 
 /**
- * Registra el cierre de sesión global que dispara el httpClient ante un 401.
+ * Registers the global sign-out triggered by the httpClient on a 401.
  */
 export function useUnauthorizedHandler(): void {
   useEffect(() => {

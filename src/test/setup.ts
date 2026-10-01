@@ -2,23 +2,22 @@ import { cleanup } from '@testing-library/react-native';
 import { notifyManager } from '@tanstack/react-query';
 
 /**
- * React Query agrupa sus notificaciones con `setTimeout(0)`. Ese macrotask se
- * dispara fuera del `act` del test (aviso "not wrapped in act"). Se sustituye
- * el scheduler por `queueMicrotask`: las notificaciones se resuelven en el
- * checkpoint de microtareas —dentro del `await act(...)` de cada test— y no
- * dejan timers colgados.
+ * React Query batches its notifications with `setTimeout(0)`. That macrotask
+ * fires outside the test's `act` ("not wrapped in act" warning). The scheduler
+ * is replaced with `queueMicrotask`: notifications resolve at the microtask
+ * checkpoint —inside each test's `await act(...)`— and leave no pending timers.
  *
- * Nota: no se usa un scheduler síncrono (`cb => cb()`) porque reentra en
- * `notifyManager.flush` y puede recursar hasta colgar.
+ * Note: a synchronous scheduler (`cb => cb()`) is not used because it re-enters
+ * `notifyManager.flush` and can recurse until it hangs.
  * https://tanstack.com/query/latest/docs/framework/react/guides/testing
  */
 notifyManager.setScheduler((callback) => queueMicrotask(callback));
 
 /**
- * En RTL v14 `cleanup` es asíncrono: desmonta el árbol y libera el `screen`
- * entre tests. Se declara explícito (además del auto-cleanup de RTL) para que
- * el desmontaje ocurra antes de que `clearMocks`/`restoreMocks` de Jest
- * desactiven los mocks que algún efecto de limpieza pueda necesitar.
+ * In RTL v14 `cleanup` is async: it unmounts the tree and releases `screen`
+ * between tests. Declared explicitly (on top of RTL's auto-cleanup) so the
+ * unmount happens before Jest's `clearMocks`/`restoreMocks` disable mocks
+ * that a cleanup effect might still need.
  */
 afterEach(async () => {
   await cleanup();

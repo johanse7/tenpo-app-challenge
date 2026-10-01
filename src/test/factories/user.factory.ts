@@ -84,8 +84,8 @@ export function makeUser(overrides: Partial<User> = {}): User {
 }
 
 /**
- * Lista de usuarios con ids/emails únicos por índice. `idPrefix` permite
- * diferenciar páginas distintas al probar el aplanado de `useInfiniteQuery`.
+ * User list with unique ids/emails per index. `idPrefix` allows
+ * distinguishing pages when testing `useInfiniteQuery` flattening.
  */
 export function makeUserList(count: number, idPrefix = 'u', overrides: Partial<User> = {}): User[] {
   return Array.from({ length: count }, (_, index) =>

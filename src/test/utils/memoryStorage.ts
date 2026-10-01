@@ -1,16 +1,16 @@
 import type { SecureStorageAdapter } from '@/core/storage/secureStorage';
 
 export interface MemoryStorage extends SecureStorageAdapter {
-  /** Vuelca el contenido actual (útil para asserts de persistencia). */
+  /** Dumps the current contents (useful for persistence asserts). */
   dump(): Record<string, string>;
-  /** Precarga una clave sin pasar por `setItem`. */
+  /** Preloads a key without going through `setItem`. */
   seed(key: string, value: string): void;
   reset(): void;
 }
 
 /**
- * Doble de `secureStorage` respaldado por un `Map`. Permite probar la
- * persistencia sin tocar `expo-secure-store`.
+ * `secureStorage` test double backed by a `Map`. Allows testing
+ * persistence without touching `expo-secure-store`.
  */
 export function createMemoryStorage(): MemoryStorage {
   const store = new Map<string, string>();
@@ -36,7 +36,7 @@ export function createMemoryStorage(): MemoryStorage {
 }
 
 /**
- * Instancia única compartida entre el `jest.mock` de
- * `@/core/storage/secureStorage` y los tests que la inspeccionan.
+ * Single instance shared between the `jest.mock` of
+ * `@/core/storage/secureStorage` and the tests that inspect it.
  */
 export const memoryStorage = createMemoryStorage();

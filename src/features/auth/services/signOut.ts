@@ -4,12 +4,12 @@ import { useAuthStore } from '../store/authStore';
 import { authService } from './authService';
 
 /**
- * Único punto de cierre de sesión: purga el token (SecureStore),
- * la sesión (store) y toda la caché de servidor (PII en memoria).
- * Lo consumen tanto `useLogout` como el handler de 401.
+ * Single sign-out point: purges the token (SecureStore),
+ * the session (store) and the entire server cache (PII in memory).
+ * Consumed by both `useLogout` and the 401 handler.
  *
- * El estado local se limpia en `finally`: un logout que no logueara
- * dejaría la app dentro del área privada sin credenciales válidas.
+ * Local state is cleared in `finally`: a logout that failed to log out
+ * would leave the app inside the private area without valid credentials.
  */
 export async function signOut(): Promise<void> {
   try {

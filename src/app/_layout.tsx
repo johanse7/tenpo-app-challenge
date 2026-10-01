@@ -15,9 +15,9 @@ import {
 import "../../global.css";
 
 /**
- * `index` se declara sin guard a propósito: es la ruta ancla del stack.
- * Cuando `(auth)` o `(app)` quedan bloqueadas, el router redirige allí y
- * `index.tsx` resuelve el destino final según el estado de sesión.
+ * `index` is declared without a guard on purpose: it is the stack's anchor route.
+ * When `(auth)` or `(app)` are blocked, the router redirects there and
+ * `index.tsx` resolves the final destination based on the session state.
  */
 export default function RootLayout() {
   const { isRestoring } = useSessionRestore();
