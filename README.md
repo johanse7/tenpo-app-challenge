@@ -2,7 +2,7 @@
 
 App móvil (Expo / React Native) que implementa un flujo de **login** y un **listado paginado de clientes** consumidos desde [randomuser.me](https://randomuser.me/api/), con sesión persistida, búsqueda con debounce y virtualización para datasets grandes.
 
-Puedes ingresar con cualquier Email y una contraseña de 8 caracteres como minimo.
+**Puedes ingresar con cualquier Email y una contraseña de 8 caracteres como minimo.**
 
 - **Stack:** Expo SDK 54 · React Native 0.81 · Expo Router · TypeScript · TanStack Query · Zustand · Axios · Zod · NativeWind + Gluestack UI · FlashList
 - **Repositorio:** `github.com/johanse7/tenpo-app-challenge`
