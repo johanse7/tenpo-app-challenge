@@ -17,10 +17,7 @@ interface LoginFormState {
   handleSubmit: () => void;
 }
 
-/**
- * Lógica del formulario: validación zod + disparo del login.
- * El componente LoginForm queda 100% presentacional.
- */
+
 export function useLoginForm(): LoginFormState {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

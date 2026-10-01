@@ -1,8 +1,9 @@
-import { memo, useCallback, useState } from 'react';
-import { Pressable } from 'react-native';
+import { memo, useCallback, useState } from "react";
+import { Pressable } from "react-native";
 
-import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
-import { HStack } from '@/components/ui/hstack';
+import { Button, ButtonSpinner, ButtonText } from "@/components/ui/button";
+import { Heading } from "@/components/ui/heading";
+import { HStack } from "@/components/ui/hstack";
 import {
   AlertCircleIcon,
   EyeIcon,
@@ -10,14 +11,12 @@ import {
   Icon,
   LockIcon,
   MailIcon,
-} from '@/components/ui/icon';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
-import { Heading } from '@/components/ui/heading';
-import { Text } from '@/components/ui/text';
-import { VStack } from '@/components/ui/vstack';
+} from "@/components/ui/icon";
+import { Input, InputField, InputSlot } from "@/components/ui/input";
+import { Text } from "@/components/ui/text";
+import { VStack } from "@/components/ui/vstack";
 
-import { useLoginForm } from '../hooks/useLoginForm';
-
+import { useLoginForm } from "../hooks/useLoginForm";
 
 export const LoginForm = memo(function LoginForm() {
   const {
@@ -47,7 +46,7 @@ export const LoginForm = memo(function LoginForm() {
       </VStack>
 
       <VStack space="xs">
-        <Input className={errors.email !== undefined ? 'border-error-500' : ''}>
+        <Input error={errors.email}>
           <InputSlot className="pl-3">
             <Icon as={MailIcon} className="text-typography-400" />
           </InputSlot>
@@ -62,17 +61,10 @@ export const LoginForm = memo(function LoginForm() {
             editable={!isPending}
           />
         </Input>
-        {errors.email !== undefined ? (
-          <Text className="text-error-500" size="xs" accessibilityLiveRegion="polite">
-            {errors.email}
-          </Text>
-        ) : null}
       </VStack>
 
       <VStack space="xs">
-        <Input
-          className={errors.password !== undefined ? 'border-error-500' : ''}
-        >
+        <Input error={errors.password}>
           <InputSlot className="pl-3">
             <Icon as={LockIcon} className="text-typography-400" />
           </InputSlot>
@@ -92,7 +84,7 @@ export const LoginForm = memo(function LoginForm() {
               hitSlop={8}
               accessibilityRole="button"
               accessibilityLabel={
-                isPasswordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'
+                isPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
               }
             >
               <Icon
@@ -102,11 +94,6 @@ export const LoginForm = memo(function LoginForm() {
             </Pressable>
           </InputSlot>
         </Input>
-        {errors.password !== undefined ? (
-          <Text className="text-error-500" size="xs" accessibilityLiveRegion="polite">
-            {errors.password}
-          </Text>
-        ) : null}
       </VStack>
 
       {isServerError ? (
@@ -118,9 +105,9 @@ export const LoginForm = memo(function LoginForm() {
         </HStack>
       ) : null}
 
-      <Button className="py-3" onPress={handleSubmit} isDisabled={isPending}>
+      <Button onPress={handleSubmit} isDisabled={isPending}>
         {isPending ? <ButtonSpinner className="mr-2" /> : null}
-        <ButtonText>{isPending ? 'Ingresando…' : 'Iniciar sesión'}</ButtonText>
+        <ButtonText>{isPending ? "Ingresando…" : "Iniciar sesión"}</ButtonText>
       </Button>
 
       <Text className="text-center text-typography-400" size="xs">
