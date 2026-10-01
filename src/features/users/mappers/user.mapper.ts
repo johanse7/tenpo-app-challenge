@@ -1,5 +1,5 @@
-import type { UserDto } from '../schemas/user.schema';
-import type { User } from '../types/user.types';
+import type { UserDto } from "../types/user.service.types";
+import type { User } from "../types/user.types";
 
 export function mapUserDtoToUser(dto: UserDto): User {
   return {

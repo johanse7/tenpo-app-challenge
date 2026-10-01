@@ -1,23 +1,18 @@
-import { httpClient } from '@/core/api/httpClient';
-import { env } from '@/core/config/env';
+import { httpClient } from "@/core/api/httpClient";
+import { env } from "@/core/config/env";
 
-import { mapUserDtoToUser } from '../mappers/user.mapper';
-import { usersPageResponseSchema } from '../schemas/user.schema';
+import { mapUserDtoToUser } from "../mappers/user.mapper";
 
-import type { UsersPage } from '../types/user.types';
+import { UsersPageResponse } from "../types/user.service.types";
+import type { UsersPage } from "../types/user.types";
 
 export interface FetchUsersPageParams {
   page: number;
 }
 
 export const usersService = {
-  /**
-   * Paginación servidor con seed determinista:
-   * GET /api/?seed=tenpo&results=50&page=N
-   * La respuesta se valida en runtime con zod antes de mapearla.
-   */
   async fetchUsersPage({ page }: FetchUsersPageParams): Promise<UsersPage> {
-    const { data } = await httpClient.get<unknown>('/', {
+    const { data } = await httpClient.get<UsersPageResponse>("/", {
       params: {
         seed: env.USERS_SEED,
         results: env.USERS_PAGE_SIZE,
@@ -26,11 +21,9 @@ export const usersService = {
       },
     });
 
-    const parsed = usersPageResponseSchema.parse(data);
-
     return {
-      users: parsed.results.map(mapUserDtoToUser),
-      page: parsed.info.page,
+      users: data.results.map(mapUserDtoToUser),
+      page: data.info.page,
     };
   },
 };
