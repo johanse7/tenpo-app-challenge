@@ -130,11 +130,7 @@ La validación de formato se hace con Zod en `src/features/auth/schemas/login.sc
 ## Posibles mejoras / siguientes pasos
 
 - **Auth real:** conectar a un backend propio con refresh token, expiración y revocación; hoy el token es mock.
-- **Búsqueda server-side o indexada** (p. ej. SQLite local) para filtrar sobre el total y no solo sobre las páginas cargadas.
-- **Cache offline persistente** de páginas (AsyncStorage/MMKV como persister de QueryClient) para arranque sin red.
-- **Precarga de avatares** y placeholders de imagen optimizados (cache de disco, downsampling).
-- **Paginación por cursor** y manejo de duplicados si el backend real lo requiere.
-- **Deep linking y notificaciones push** aprovechando el scheme `tenpo://`.
+- **Búsqueda server-side o indexada** para filtrar sobre el total y no solo sobre las páginas cargadas.
+- **Cache offline persistente** de páginas (MMKV como persister de QueryClient) para arranque sin red.
 - **E2E tests** con Maestro o Detox sobre el build `preview`.
-- **Accesibilidad e i18n:** centralizar strings y auditar labels con VoiceOver/TalkBack.
 - **CI:** correr `lint`, `typecheck` y `test` en cada PR y publicar updates automáticos por branch con EAS.
